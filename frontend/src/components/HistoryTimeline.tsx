@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, X, Clock, MessageSquareQuote, Loader2, Info } from "lucide-react";
+import { MessageSquareQuote, Loader2, Info } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../api/client";
 

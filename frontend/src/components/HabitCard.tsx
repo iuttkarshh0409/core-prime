@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, X, Flame, TrendingUp, Loader2, Archive, Download, CheckCircle2, XCircle } from "lucide-react";
+import { Check, X, Flame, TrendingUp, Loader2, Archive, Download, CheckCircle2 } from "lucide-react";
 import { useCheckInHabit, useArchiveHabit } from "../hooks/useHabits";
 import { useAppStore } from "../store/useStore"
 import { cn } from "../lib/utils";
