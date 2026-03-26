@@ -2,14 +2,20 @@ import sys
 import os
 from pathlib import Path
 
-# Add backend directory to path
+# Add backend and app directories to path for monorepo routing
 backend_path = str(Path(__file__).resolve().parent.parent)
-if backend_path not in sys.path:
-    sys.path.append(backend_path)
+app_path = str(Path(__file__).resolve().parent)
+if backend_path not in sys.path: sys.path.append(backend_path)
+if app_path not in sys.path: sys.path.append(app_path)
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.v1.api import api_router
+
+# VERCEL SELF-HEALING IMPORTS
+try:
+    from app.api.v1.api import api_router
+except ImportError:
+    from api.v1.api import api_router
 
 app = FastAPI(
     title="Habit Tracker API",
