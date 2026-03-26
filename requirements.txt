@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+aiosqlite
+httpx
+pandas
+libsql-client
+mangum
+python-dotenv
+httpx
+requests
+pandas
