@@ -6,7 +6,8 @@ from contextlib import asynccontextmanager
 
 load_dotenv()
 
-TURSO_URL = os.getenv("TURSO_URL", "libsql://habits-db-iuttkarshh0409.aws-ap-south-1.turso.io")
+# FIX: Use https:// for reliable cloud connection on Vercel
+TURSO_URL = os.getenv("TURSO_URL", "https://habits-db-iuttkarshh0409.aws-ap-south-1.turso.io")
 TURSO_TOKEN = os.getenv("TURSO_TOKEN", "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3NzQ1NTMxNTIsImlkIjoiMDE5ZDJiOWMtMTAwMS03YjU1LWFmOTgtM2UzOWUwMjRiMDc4IiwicmlkIjoiMWM5MWU4NzMtYTg5OC00MjIxLWI0YTMtMWU0ZTFkYTlhMDBiIn0.v1MkNnEOoWFhrNp0DmkgxQtN_noA3SZ8MFxdDuvWQMNxLq1WZpocGSk1Yd6U7LkqfLThHqcm8c3dOcpI9uaSCQ")
 
 class TursoCompatibilityWrapper:
