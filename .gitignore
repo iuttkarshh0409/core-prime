@@ -1,0 +1,21 @@
+# Node / React
+frontend/node_modules/
+frontend/dist/
+.eslintcache
+
+# Python / FastAPI
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/venv/
+backend/env/
+
+# Database / Local Files
+*.db
+*.db-journal
+.env
+.DS_Store
+*.log
+
+# Vercel
+.vercel

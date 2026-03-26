@@ -1,0 +1,32 @@
+from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from app.api.v1.api import api_router
+
+app = FastAPI(
+    title="Habit Tracker API",
+    description="A production-grade habit-tracking backend with explainable analytics.",
+    version="1.0.0"
+)
+
+# Standard CORS setup
+# In real production, this SHOULD NOT be "*".
+# Ideally load from .env: [http://localhost:3000, http://localhost:5173]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+from mangum import Mangum
+
+# Root router inclusion (v1)
+app.include_router(api_router, prefix="/api/v1")
+
+@app.get("/health")
+async def health_check():
+    return {"status": "ok", "message": "The Habit Tracker API is live."}
+
+# Vercel handler
+handler = Mangum(app)
