@@ -9,26 +9,16 @@ load_dotenv()
 TURSO_URL = os.getenv("TURSO_URL", "https://habits-db-iuttkarshh0409.aws-ap-south-1.turso.io")
 TURSO_TOKEN = os.getenv("TURSO_TOKEN", "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3NzQ1NTMxNTIsImlkIjoiMDE5ZDJiOWMtMTAwMS03YjU1LWFmOTgtM2UzOWUwMjRiMDc4IiwicmlkIjoiMWM5MWU4NzMtYTg5OC00MjIxLWI0YTMtMWU0ZTFkYTlhMDBiIn0.v1MkNnEOoWFhrNp0DmkgxQtN_noA3SZ8MFxdDuvWQMNxLq1WZpocGSk1Yd6U7LkqfLThHqcm8c3dOcpI9uaSCQ")
 
-class CompactRow:
-    """A row that supports both dict-style and index-style access."""
+class CompactRow(dict):
+    """A dict that also supports index-style access."""
     def __init__(self, columns, values):
-        self._columns = columns
         self._values = values
-        self._data = dict(zip(columns, values))
+        super().__init__(zip(columns, values))
 
     def __getitem__(self, key):
         if isinstance(key, int):
             return self._values[key]
-        return self._data[key]
-    
-    def __iter__(self):
-        return iter(self._data.keys())
-    
-    def __repr__(self):
-        return str(self._data)
-    
-    def keys(self):
-        return self._columns
+        return super().__getitem__(key)
 
 class TursoCompatibilityWrapper:
     def __init__(self, client):
@@ -36,11 +26,16 @@ class TursoCompatibilityWrapper:
     
     @asynccontextmanager
     async def execute(self, sql, params=None):
+        # Handle the case where params is a single value, not a list/tuple
+        if params is not None and not isinstance(params, (list, tuple)):
+            params = (params,)
+            
         rs = await self.client.execute(sql, params or ())
         
         class MockCursor:
             def __init__(self, rs):
                 self.rs = rs
+                # Use a safer way to get the last ID
                 self.lastrowid = getattr(rs, 'last_insert_rowid', None)
             async def fetchall(self):
                 return [CompactRow(self.rs.columns, row) for row in self.rs.rows]
@@ -51,12 +46,15 @@ class TursoCompatibilityWrapper:
         yield MockCursor(rs)
 
     async def commit(self):
+        # Libsql is auto-commit unless in a transaction block
         pass
 
     async def close(self):
         await self.client.close()
 
 async def get_db():
+    # Use the create_client correctly. 
+    # For Vercel/Serverless, a fresh client per request is safest.
     client = libsql_client.create_client(url=TURSO_URL, auth_token=TURSO_TOKEN)
     wrapper = TursoCompatibilityWrapper(client)
     try:
