@@ -35,9 +35,11 @@ import traceback
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc):
+    headers = {"X-Error": str(exc).replace("\n", " ")}
     return JSONResponse(
         status_code=500,
         content={"detail": str(exc), "traceback": traceback.format_exc()},
+        headers=headers
     )
 
 # Root router inclusion (v1)
