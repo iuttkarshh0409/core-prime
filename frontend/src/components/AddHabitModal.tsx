@@ -45,26 +45,26 @@ export const AddHabitModal = () => {
 
             <div className="flex justify-between items-start mb-8">
               <div>
-                <h2 className="text-3xl font-black text-white tracking-tighter">NEURAL DEPLOY</h2>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Initiating New Optimization Habit</p>
+                <h2 className="text-3xl font-bold text-white tracking-tight leading-none">New Habit</h2>
+                <p className="text-xs font-medium text-muted mt-2">Add a new daily activity to your cadence.</p>
               </div>
               <button 
                  onClick={() => setAddHabitModal(false)}
-                 className="p-2 rounded-xl border border-white/5 bg-white/5 text-gray-400 hover:text-white transition-colors"
+                 className="p-3 rounded-2xl bg-white/5 text-muted hover:text-white transition-all shadow-sm"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="space-y-3">
-                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest px-1">Habit Identification</label>
+                <label className="text-[10px] font-bold text-muted uppercase tracking-widest px-1">Habit Name</label>
                 <input
                   autoFocus
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. MORNING_FASTING"
-                  className="w-full h-16 px-6 bg-white/[0.03] border border-white/10 rounded-2xl text-xl font-bold text-white placeholder:text-white/10 focus:outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all font-mono"
+                  placeholder="e.g. Morning Meditation"
+                  className="w-full h-16 px-6 bg-white/[0.03] border border-white/10 rounded-2xl text-xl font-bold text-white placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:ring-8 focus:ring-primary/5 transition-all"
                   onKeyDown={(e) => e.key === "Enter" && handleDeploy()}
                 />
               </div>
@@ -72,10 +72,10 @@ export const AddHabitModal = () => {
               <button
                 disabled={isPending || !name.trim()}
                 onClick={handleDeploy}
-                className="w-full h-16 rounded-2xl bg-white text-black font-black uppercase text-sm tracking-tighter flex items-center justify-center gap-3 hover:bg-purple-500 hover:text-white transition-all duration-500 disabled:opacity-30 disabled:pointer-events-none"
+                className="w-full h-16 rounded-3xl bg-white text-black font-bold uppercase text-sm tracking-tight flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-xl disabled:opacity-30"
               >
-                {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
-                Deploy To Biometric Core
+                {isPending ? <Loader2 className="w-5 h-5 animate-spin text-primary" /> : <Plus className="w-5 h-5" />}
+                Add Habit
               </button>
             </div>
           </motion.div>
