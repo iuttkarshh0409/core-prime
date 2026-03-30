@@ -20,12 +20,12 @@ export const StatBlock = ({ label, value, sub, delay = 0 }: StatBlockProps) => (
       {label}
     </span>
     
-    <div className="flex items-baseline gap-2">
-      <span className="text-3xl font-bold text-white tabular-nums tracking-tighter">
+    <div className="flex flex-col gap-1 mt-1 w-full overflow-hidden">
+      <span className="text-xl md:text-2xl font-bold text-white tracking-tighter leading-tight break-normal overflow-hidden">
         {value}
       </span>
       {sub && (
-        <span className="text-[10px] text-accent font-bold uppercase tracking-tighter opacity-80 group-hover:opacity-100 transition-opacity">
+        <span className="text-[10px] text-accent font-bold uppercase tracking-tight opacity-70 group-hover:opacity-100 transition-opacity shrink-0">
           {sub}
         </span>
       )}

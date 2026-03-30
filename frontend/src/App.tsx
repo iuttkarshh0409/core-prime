@@ -8,6 +8,7 @@ import { StatBlock } from "./components/StatBlock";
 import { AddHabitModal } from "./components/AddHabitModal";
 import { HistoryTimeline } from "./components/HistoryTimeline";
 import { CompletionTrendChart, BiometricHeatmap } from "./components/AnalyticsCharts";
+import { LandingPage } from "./LandingPage";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Plus, 
@@ -149,7 +150,7 @@ const Overview = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <StatBlock label="Consistency" value={`${stats?.overall_consistency}%`} sub="+1.2% this week" />
               <StatBlock label="Habits Tracking" value={stats?.total_habits} sub="Active habits" />
-              <StatBlock label="Top Performer" value={stats?.most_consistent.split(' ')[0]} sub={`${stats?.most_consistent_value}% success`} />
+              <StatBlock label="Top Performer" value={stats?.most_consistent} sub={`${stats?.most_consistent_value}% success`} />
               <StatBlock label="Best Streak" value={stats?.longest_streak_value} sub="Days in a row" />
             </div>
          </div>
@@ -338,6 +339,20 @@ const History = () => {
 
 function MainLayout() {
   const { activeTab, setActiveTab, notification } = useAppStore();
+  const [showLanding, setShowLanding] = useState(() => {
+    // Check if user has already "entered" in this session
+    return !sessionStorage.getItem("cadence_entered");
+  });
+
+  const handleEnter = () => {
+    sessionStorage.setItem("cadence_entered", "true");
+    setShowLanding(false);
+  };
+
+  if (showLanding) {
+    return <LandingPage onStart={handleEnter} />;
+  }
+
   return (
     <div className="min-h-screen bg-background text-white selection:bg-primary/20 overflow-x-hidden font-sans">
       {/* Visual Ambience */}
