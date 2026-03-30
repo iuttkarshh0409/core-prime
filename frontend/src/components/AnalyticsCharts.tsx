@@ -27,38 +27,33 @@ export const CompletionTrendChart = () => {
   }));
 
   const periods = [
-    { label: "7D", value: 7 },
-    { label: "30D", value: 30 },
-    { label: "90D", value: 90 },
+    { label: "7 Days", value: 7 },
+    { label: "30 Days", value: 30 },
+    { label: "90 Days", value: 90 },
   ];
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="p-10 rounded-[4rem] bg-white/[0.02] border border-white/10 backdrop-blur-3xl relative overflow-hidden"
-    >
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
-         <div className="flex items-center gap-5">
-            <div className="p-4 bg-purple-500/10 rounded-[1.5rem] border border-purple-500/20 shadow-glow">
-               <Activity className="w-8 h-8 text-purple-500" />
+    <div className="relative">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
+         <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-primary/10 rounded-xl border border-primary/20">
+               <Activity className="w-6 h-6 text-primary" />
             </div>
             <div>
-               <h3 className="text-2xl font-black text-white tracking-tighter uppercase leading-none italic">Velocity Spectrum</h3>
-               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em] mt-2">Global Performance Fluctuations</p>
+               <h3 className="text-xl font-bold text-white tracking-tight leading-none italic">Habit Performance</h3>
+               <p className="text-[10px] text-muted font-medium mt-1">Percentage completion across active habits.</p>
             </div>
          </div>
 
-         {/* RANGE SELECTOR */}
-         <div className="flex p-1.5 bg-white/5 rounded-2xl border border-white/5">
+         <div className="flex p-1 bg-white/5 rounded-2xl border border-white/5">
             {periods.map((p) => (
                 <button
                     key={p.value}
                     onClick={() => setDays(p.value)}
-                    className={`px-5 py-2.5 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all duration-500 ${
+                    className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase transition-all duration-300 ${
                         days === p.value 
                         ? "bg-white text-black shadow-lg scale-105" 
-                        : "text-gray-500 hover:text-white"
+                        : "text-muted hover:text-white"
                     }`}
                 >
                     {p.label}
@@ -67,55 +62,56 @@ export const CompletionTrendChart = () => {
          </div>
       </div>
 
-      <div className="h-[350px] w-full relative">
+      <div className="h-[280px] w-full relative">
         {isLoading && (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-sm rounded-3xl">
-                <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-3xl">
+                <Loader2 className="w-8 h-8 text-primary animate-spin" />
             </div>
         )}
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <defs>
               <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#A855F7" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#A855F7" stopOpacity={0}/>
+                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
+            <CartesianGrid strokeDasharray="4 4" stroke="#ffffff05" vertical={false} />
             <XAxis 
               dataKey="date" 
-              stroke="#4b5563" 
+              stroke="#64748b" 
               fontSize={10} 
               tickLine={false} 
               axisLine={false}
               dy={15}
-              fontFamily="inherit"
-              fontWeight={900}
+              fontWeight={700}
             />
             <YAxis 
-              stroke="#4b5563" 
+              stroke="#64748b" 
               fontSize={10} 
               tickLine={false} 
               axisLine={false} 
               tickFormatter={(val) => `${val}%`}
-              fontFamily="inherit"
-              fontWeight={900}
+              fontWeight={700}
             />
             <Tooltip 
-              cursor={{ stroke: '#A855F7', strokeWidth: 1, strokeDasharray: '5 5' }}
+              cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 1, strokeDasharray: '4 4' }}
               contentStyle={{ 
-                backgroundColor: "#080808", 
+                backgroundColor: "#0a0a0a", 
                 border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "24px",
+                borderRadius: "16px",
                 padding: "16px",
-                boxShadow: "0 20px 40px rgba(0,0,0,0.4)"
+                boxShadow: "0 20px 40px rgba(0,0,0,0.8)",
+                fontSize: "12px",
+                fontWeight: "700"
               }}
+              itemStyle={{ color: "hsl(var(--primary))" }}
             />
             <Area 
                type="monotone" 
                dataKey="rate" 
-               stroke="#A855F7" 
-               strokeWidth={4}
+               stroke="hsl(var(--primary))" 
+               strokeWidth={3}
                fillOpacity={1} 
                fill="url(#colorRate)" 
                animationDuration={1500}
@@ -124,44 +120,44 @@ export const CompletionTrendChart = () => {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-// HEATMAP SIMULATION
 export const BiometricHeatmap = () => {
     const days = Array.from({ length: 30 }, (_, i) => ({
       day: i + 1,
-      active: Math.random() > 0.3
+      active: Math.random() > 0.4
     }));
 
     return (
-        <div className="p-10 rounded-[4rem] bg-white/[0.02] border border-white/10 backdrop-blur-3xl h-full flex flex-col justify-between">
-           <div>
-              <div className="flex items-center gap-4 mb-10">
-                 <Calendar className="w-6 h-6 text-emerald-500" />
-                 <h3 className="text-xl font-black text-white tracking-tight uppercase italic">Monthly Density</h3>
+        <div className="w-full flex flex-col justify-between h-full">
+            <div>
+              <div className="flex items-center gap-3 mb-8">
+                 <Calendar className="w-5 h-5 text-accent" />
+                 <h3 className="text-lg font-bold text-white tracking-tight">Consistency View</h3>
               </div>
-              <div className="grid grid-cols-5 md:grid-cols-6 gap-3">
+              <div className="grid grid-cols-6 gap-2.5">
                  {days.map((d, i) => (
                    <motion.div
                      key={i}
-                     initial={{ opacity: 0, scale: 0 }}
+                     initial={{ opacity: 0, scale: 0.8 }}
                      animate={{ opacity: 1, scale: 1 }}
                      transition={{ delay: i * 0.01 }}
-                     className={`aspect-square rounded-xl border transition-all duration-700 ${
+                     className={`aspect-square rounded-lg border transition-all duration-700 ${
                        d.active 
-                         ? "bg-emerald-500/10 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]" 
+                         ? "bg-accent/20 border-accent/40" 
                          : "bg-white/5 border-white/5"
                      }`}
+                     title={`Activity day ${d.day}`}
                    />
                  ))}
               </div>
-           </div>
-           <div className="mt-10 pt-6 border-t border-white/5 flex items-center justify-between text-[9px] font-black text-gray-600 uppercase tracking-[0.4em]">
-              <span>Epoch Start</span>
-              <span>Epoch End</span>
-           </div>
+            </div>
+            <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-[8px] font-bold text-muted uppercase tracking-[0.4em]">
+               <span>Day 01</span>
+               <span>Day 30</span>
+            </div>
         </div>
     )
 }

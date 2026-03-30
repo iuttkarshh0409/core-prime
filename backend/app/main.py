@@ -18,8 +18,8 @@ except ImportError:
     from api.v1.api import api_router
 
 app = FastAPI(
-    title="Habit Tracker API",
-    description="A production-grade habit-tracking backend with explainable analytics.",
+    title="Habit Cadence API",
+    description="A high-precision habit-tracking backend with readable analytics.",
     version="1.0.0"
 )
 

@@ -1,8 +1,8 @@
-# ⚡ CORE PRIME - Neural Habit Tracker
+# ⚡ Habit Cadence - Precision Routine Tracker
 
-**CORE PRIME** is a production-grade, decoupled habit-tracking system designed for those who treat performance as an engineering challenge. Built with a high-end "Industrial-Analytical" aesthetic, it combines a performant **FastAPI** backend with a reactive **Vite + React** frontend.
+**Habit Cadence** is a production-grade, decoupled habit-tracking system designed for those who treat performance as a rhythmic engineering challenge. Built with a high-end "Industrial-Analytical" aesthetic, it combines a performant **FastAPI** backend with a reactive **Vite + React** frontend.
 
-![CORE PRIME Display](/api/placeholder/800/400)
+![Habit Cadence Overview](/api/placeholder/800/400)
 
 ## 🌌 High-End Tech Stack
 
