@@ -104,8 +104,8 @@ async def archive_habit(habit_id: int, db: aiosqlite.Connection = Depends(get_db
     """
     Archive a habit.
     """
-    await db.execute("UPDATE habits SET is_active = 0 WHERE id = ?", (habit_id,))
-    await db.commit()
+    async with db.execute("UPDATE habits SET is_active = 0 WHERE id = ?", (habit_id,)) as cursor:
+        await db.commit()
     return {"status": "success", "message": f"Habit {habit_id} archived."}
 
 @router.patch("/{habit_id}/unarchive")
@@ -113,6 +113,6 @@ async def unarchive_habit(habit_id: int, db: aiosqlite.Connection = Depends(get_
     """
     Restore an archived habit.
     """
-    await db.execute("UPDATE habits SET is_active = 1 WHERE id = ?", (habit_id,))
-    await db.commit()
+    async with db.execute("UPDATE habits SET is_active = 1 WHERE id = ?", (habit_id,)) as cursor:
+        await db.commit()
     return {"status": "success", "message": f"Habit {habit_id} restored."}

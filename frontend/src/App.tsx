@@ -344,8 +344,9 @@ function MainLayout() {
     return !sessionStorage.getItem("cadence_entered");
   });
 
-  const handleEnter = () => {
+  const handleEnter = (tab?: 'overview' | 'analytics' | 'history') => {
     sessionStorage.setItem("cadence_entered", "true");
+    if (tab) setActiveTab(tab);
     setShowLanding(false);
   };
 
@@ -363,12 +364,19 @@ function MainLayout() {
 
       {/* Main Navigation */}
       <nav className="sticky top-0 z-[100] border-b border-white/5 bg-background/80 backdrop-blur-2xl px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-           <div className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center shadow-2xl">
+        <div 
+          onClick={() => {
+            sessionStorage.removeItem("cadence_entered");
+            setShowLanding(true);
+          }} 
+          className="flex items-center gap-4 cursor-pointer group"
+          title="Return to Landing Page"
+        >
+           <div className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center shadow-2xl group-hover:scale-110 transition-all">
               <BarChart3 className="w-6 h-6" />
            </div>
            <div className="flex flex-col">
-              <h1 className="text-xl font-bold text-white tracking-tight leading-none uppercase">Habit Cadence</h1>
+              <h1 className="text-xl font-bold text-white tracking-tight leading-none uppercase group-hover:text-primary transition-colors">Habit Cadence</h1>
               <div className="flex items-center gap-1.5 mt-1">
                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                  <span className="text-[9px] font-bold text-accent uppercase tracking-widest">System Online</span>

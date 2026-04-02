@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 interface LandingPageProps {
-  onStart: () => void;
+  onStart: (tab?: 'overview' | 'analytics' | 'history') => void;
 }
 
 export const LandingPage = ({ onStart }: LandingPageProps) => {
@@ -33,7 +33,7 @@ export const LandingPage = ({ onStart }: LandingPageProps) => {
            <h1 className="text-xl font-bold tracking-tight uppercase">Habit Cadence</h1>
         </div>
         <button 
-          onClick={onStart}
+          onClick={() => onStart('overview')}
           className="px-6 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-bold hover:bg-white hover:text-black transition-all"
         >
           Enter Dashboard
@@ -80,7 +80,7 @@ export const LandingPage = ({ onStart }: LandingPageProps) => {
              className="flex flex-col sm:flex-row items-center gap-6"
            >
               <button 
-                onClick={onStart}
+                onClick={() => onStart('analytics')}
                 className="group flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-2xl"
               >
                  Initialize Core
@@ -182,7 +182,7 @@ export const LandingPage = ({ onStart }: LandingPageProps) => {
          <div className="flex flex-col items-center gap-10">
             <h3 className="text-3xl font-bold tracking-tight">Ready to synchronize?</h3>
             <button 
-              onClick={onStart}
+              onClick={() => onStart('history')}
               className="px-10 py-4 rounded-2xl bg-primary text-white font-bold hover:scale-105 active:scale-95 transition-all glow-primary flex items-center gap-3"
             >
                Deploy Workspace Now
